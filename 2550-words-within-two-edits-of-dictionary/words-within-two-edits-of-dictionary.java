@@ -11,11 +11,11 @@ class Solution {
             for (int j = 0; j < dictionary.length; j++) {
                 String dictionaryword = dictionary[j];
                 int count = 0;
-                int k = 0;
-                while (k != dictionaryword.length()) {
+                for (int k = 0; k < dictionaryword.length(); k++) {
                     if (queryword.charAt(k) != dictionaryword.charAt(k))
                         count++;
-                    k++;
+                    if (count > 2)
+                        break;
                 }
                 if (count <= 2) {
                     if (!word.equals(queryword)) {
