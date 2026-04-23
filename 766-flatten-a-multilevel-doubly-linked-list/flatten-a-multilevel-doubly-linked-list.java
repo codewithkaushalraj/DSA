@@ -12,25 +12,24 @@ class Solution {
     public Node flatten(Node head) {
         Node temp = head;
         while (temp != null) {
+            Node Next = temp.next;
+
             if (temp.child != null) {
-                Node nextNode = temp.next;
                 Node child = temp.child;
                 temp.child = null;
 
-                Node newHead = flatten(child);
-                temp.next = newHead;
-                newHead.prev = temp;
+                Node newchild = flatten(child);
+                temp.next = newchild;
+                newchild.prev = temp;
 
-                Node tail = newHead;
+                Node tail = newchild;
                 while (tail.next != null)
                     tail = tail.next;
-                tail.next = nextNode;
-                if (nextNode != null)
-                    nextNode.prev = tail;
-                temp = nextNode;
+                tail.next = Next;
+                if (Next != null)
+                    Next.prev = tail;
             }
-            if (temp != null)
-                temp = temp.next;
+            temp = Next;
         }
         return head;
 
