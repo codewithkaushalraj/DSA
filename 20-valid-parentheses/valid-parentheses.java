@@ -9,6 +9,8 @@ class Solution {
                 stk.push(ch);
                 continue;
             }
+            if (stk.peek() == '}' || stk.peek() == ']' || stk.peek() == ')')
+                return false;
             if (stk.peek() == '{' && ch == '}')
                 stk.pop();
             else if (stk.peek() == '(' && ch == ')')
