@@ -1,22 +1,9 @@
 class Solution {
-    public String reverse(String s) {
-        char[] ch = s.toCharArray();
-        int i = 0, j = ch.length - 1;
-        while (i < j) {
-            char c = ch[i];
-            ch[i] = ch[j];
-            ch[j] = c;
-            i++;
-            j--;
-        }
-        return new String(ch);
-    }
-
     public String removeDuplicates(String str) {
 
         char[] ch = str.toCharArray();
         Stack<Character> s = new Stack<>();
-        String ans = "";
+        StringBuilder sb = new StringBuilder();
 
         for (char ele : ch) {
             if (s.isEmpty()) {
@@ -28,10 +15,10 @@ class Solution {
         }
 
         while (!s.isEmpty()) {
-            ans += s.pop();
+            sb.append(s.pop());
         }
 
-        return reverse(ans);
+        return sb.reverse().toString();
 
     }
 }
