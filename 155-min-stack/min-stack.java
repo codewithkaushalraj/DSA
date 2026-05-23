@@ -1,39 +1,63 @@
 class MinStack {
-    ArrayList<Integer> arr = new ArrayList<>();
-    int min = Integer.MAX_VALUE;
+    Stack<Integer> s;
+    Stack<Integer> min; // this will contain the minimum elemements of stack;
 
     public MinStack() {
-        arr = new ArrayList<>();
+        s = new Stack<>();
+        min = new Stack<>();
     }
 
     public void push(int val) {
-        min = Math.min(min, val);
-        arr.add(val);
+        s.push(val);
+        if (min.isEmpty() || min.peek() >= val)
+            min.push(val);
     }
 
     public void pop() {
-        arr.remove(arr.size() - 1);
-        min = Integer.MAX_VALUE;
-        for (int i = 0; i < arr.size(); i++)
-            min = Math.min(min, arr.get(i));
+        int ele = s.pop();
+        if (!min.isEmpty() && ele == min.peek())
+            min.pop();
+
     }
 
     public int top() {
-        return arr.get(arr.size() - 1);
-
+        return s.peek();
     }
 
     public int getMin() {
-        return min;
-
+        if(min.isEmpty()) return 0;
+        return min.peek();
     }
 }
 
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack obj = new MinStack();
- * obj.push(val);
- * obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.getMin();
- */
+// Solve by using of ArrayList
+// class MinStack {
+//     ArrayList<Integer> arr = new ArrayList<>();
+//     int min = Integer.MAX_VALUE;
+
+//     public MinStack() {
+//         arr = new ArrayList<>();
+//     }
+
+//     public void push(int val) {
+//         min = Math.min(min, val);
+//         arr.add(val);
+//     }
+
+//     public void pop() {
+//         arr.remove(arr.size() - 1);
+//         min = Integer.MAX_VALUE;
+//         for (int i = 0; i < arr.size(); i++)
+//             min = Math.min(min, arr.get(i));
+//     }
+
+//     public int top() {
+//         return arr.get(arr.size() - 1);
+
+//     }
+
+//     public int getMin() {
+//         return min;
+
+//     }
+// }
