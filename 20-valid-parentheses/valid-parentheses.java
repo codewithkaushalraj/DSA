@@ -1,45 +1,27 @@
 class Solution {
     public boolean isValid(String s) {
-        Stack<Character> stk = new Stack<>();
-        // int len = s.length();
 
-        // for (int i = 0; i < len; i++) {
-        //     char ch = s.charAt(i);
-        //     if (stk.isEmpty()) {
-        //         stk.push(ch);
-        //         continue;
-        //     }
-        //     if (stk.peek() == '{' && ch == '}')
-        //         stk.pop();
-        //     else if (stk.peek() == '(' && ch == ')')
-        //         stk.pop();
-        //     else if (stk.peek() == '[' && ch == ']')
-        //         stk.pop();
-        //     else
-        //         stk.push(ch);
-        // }
-        // if (stk.isEmpty())
-        //     return true;
-        // else
-        //     return false;
+        Stack<Character> st = new Stack<>();
 
-        //-----------------Method 2nd--------------------
-
-        for (char ch : s.toCharArray()) {
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
             if (ch == '(')
-                stk.push(')');
+                st.push(')');
             else if (ch == '{')
-                stk.push('}');
+                st.push('}');
             else if (ch == '[')
-                stk.push(']');
-            else {
-                if (stk.isEmpty() || stk.pop() != ch)
-                    return false;
-            }
+                st.push(']');
+            else if (st.size() != 0 && st.peek() != ch)
+                return false;
+                else if( st.size()==0 && (ch==')'||ch=='}'|| ch==']'))
+                return false;
+            else
+                st.pop();
         }
-        if (stk.isEmpty())
-            return true;
-        else
+        if (st.size() != 0)
             return false;
+        else
+            return true;
+
     }
 }
