@@ -27,15 +27,11 @@ class Solution {
                 }
             }
         }
-        Stack<Character> temp = new Stack<>();
-
-        while (st.size() != 0)
-            temp.push(st.pop());
-        String ans = "";
-        while (temp.size() != 0)
-            ans += temp.pop();
-
-        return ans;
+        StringBuilder ans = new StringBuilder();
+        while (st.size() != 0) {
+            ans.append(st.pop());
+        }
+        return ans.reverse().toString();
 
     }
 }
