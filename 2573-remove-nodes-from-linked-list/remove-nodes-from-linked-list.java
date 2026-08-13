@@ -1,5 +1,6 @@
 class Solution {
 
+    //    For Method-1
     public ListNode reverse(ListNode head) {
         ListNode prev = null;
         ListNode curr = head;
@@ -15,58 +16,56 @@ class Solution {
 
     public ListNode removeNodes(ListNode head) {
 
-        if (head.next == null)
-            return head;
+        //------------------(Solved By LinkedList )----------------------
+        // if (head.next == null)
+        //     return head;
 
-        // This Logic is correct but there has a time limit exceeded error 
-        // for big test cases 
-
+        // ListNode reverseHead = reverse(head);
         // ListNode dummy = new ListNode(-1);
-        // ListNode NewHead = dummy;
-        // ListNode temp1 = head;
-        // ListNode temp2 = head.next;
+        // ListNode newHead = dummy;
+        // int maxVal = Integer.MIN_VALUE;
 
-        // while (temp1 != null) {
-        //     boolean isLesser = false;
-        //     while (temp2 != null) {
-        //         if (temp1.val < temp2.val) {
-        //             isLesser = true;
-        //             break;
-        //         }
-        //         temp2 = temp2.next;
-        //     }
-        //     if (!isLesser) {
-        //         dummy.next = temp1;
+        // ListNode temp = reverseHead;
+
+        // while (temp != null) {
+        //     if (temp.val >= maxVal) {
+        //         dummy.next = temp;
+        //         maxVal = temp.val;
         //         dummy = dummy.next;
         //     }
-        //     temp1 = temp1.next;
-        //     if (temp1 != null)
-        //         temp2 = temp1.next;
+        //     temp = temp.next;
         // }
-        // return NewHead.next;
+        // dummy.next = null;
 
-        //----------------------------------------------
+        // newHead = reverse(newHead.next);
 
-        ListNode reverseHead = reverse(head);
-        ListNode dummy = new ListNode(-1);
-        ListNode newHead = dummy;
-        int maxVal = Integer.MIN_VALUE;
+        // return newHead;
 
-        ListNode temp = reverseHead;
+        //------------------(Solved By Stack )----------------
+
+        Stack<ListNode> st = new Stack<>();
+        ListNode temp = head;
 
         while (temp != null) {
-            if (temp.val >= maxVal) {
-                dummy.next = temp;
-                maxVal = temp.val;
-                dummy = dummy.next;
+            if (st.size() != 0 && temp.val > st.peek().val) {
+                while (st.size() != 0 && temp.val > st.peek().val)
+                    st.pop();
             }
+            st.push(temp);
             temp = temp.next;
         }
-        dummy.next = null;
 
-        newHead = reverse(newHead.next);
+        Stack<ListNode> temporary = new Stack<>();
+        while (st.size() != 0)
+            temporary.push(st.pop());
 
-        return newHead;
+        ListNode dummy = new ListNode(-1);
+        ListNode newHead = dummy;
+        while (temporary.size() != 0) {
+            dummy.next = temporary.pop();
+            dummy = dummy.next;
+        }
+        return newHead.next;
 
     }
 }
