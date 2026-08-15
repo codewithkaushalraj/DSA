@@ -8,6 +8,7 @@ class Solution {
             return nge;
         }
 
+        // Traverse the array twice
         for (int i = 2 * (n - 1); i >= 0; i--) {
             int idx = i % n;
             int currElem = arr[idx];
