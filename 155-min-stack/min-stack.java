@@ -1,63 +1,49 @@
 class MinStack {
-    Stack<Integer> s;
-    Stack<Integer> min; // this will contain the minimum elemements of stack;
+    Stack<Integer> st;
+    Stack<Integer> minSt;
 
     public MinStack() {
-        s = new Stack<>();
-        min = new Stack<>();
+        st = new Stack<>();
+        minSt = new Stack<>();
+
     }
 
-    public void push(int val) {
-        s.push(val);
-        if (min.isEmpty() || min.peek() >= val)
-            min.push(val);
+    public void push(int value) {
+        if (st.size() == 0) {
+            st.push(value);
+            minSt.push(value);
+        } else {
+            if (value > minSt.peek())
+                minSt.push(minSt.peek());
+            else
+                minSt.push(value);
+            st.push(value);
+        }
+
     }
 
     public void pop() {
-        int ele = s.pop();
-        if (!min.isEmpty() && ele == min.peek())
-            min.pop();
+        st.pop();
+        minSt.pop();
 
     }
 
     public int top() {
-        return s.peek();
+        return st.peek();
+
     }
 
     public int getMin() {
-        if(min.isEmpty()) return -1;
-        return min.peek();
+        return minSt.peek();
+
     }
 }
 
-// Solve by using of ArrayList
-// class MinStack {
-//     ArrayList<Integer> arr = new ArrayList<>();
-//     int min = Integer.MAX_VALUE;
-
-//     public MinStack() {
-//         arr = new ArrayList<>();
-//     }
-
-//     public void push(int val) {
-//         min = Math.min(min, val);
-//         arr.add(val);
-//     }
-
-//     public void pop() {
-//         arr.remove(arr.size() - 1);
-//         min = Integer.MAX_VALUE;
-//         for (int i = 0; i < arr.size(); i++)
-//             min = Math.min(min, arr.get(i));
-//     }
-
-//     public int top() {
-//         return arr.get(arr.size() - 1);
-
-//     }
-
-//     public int getMin() {
-//         return min;
-
-//     }
-// }
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(value);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
