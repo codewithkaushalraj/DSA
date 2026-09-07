@@ -24,9 +24,13 @@ class pair {
 }
 
 class Solution {
-    public List<List<Integer>> helper(TreeNode root, List<List<Integer>> ans, List<Integer> l) {
-        int currentLevel = 1;
+    public List<List<Integer>> helper(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> l = new ArrayList<>();
         Queue<pair> q = new LinkedList<>();
+        int currentLevel = 1;
+        if (root == null)
+            return ans;
 
         q.add(new pair(root, 0));
         while (q.size() > 0) {
@@ -37,23 +41,21 @@ class Solution {
                 l.clear();
             }
             l.add(frontElem.node.val);
+            TreeNode leftChild = frontElem.node.left;
+            TreeNode rightChild = frontElem.node.right;
 
-            if (frontElem.node.left != null)
-                q.add(new pair(frontElem.node.left, frontElem.level + 1));
+            if (leftChild != null)
+                q.add(new pair(leftChild, frontElem.level + 1));
 
-            if (frontElem.node.right != null)
-                q.add(new pair(frontElem.node.right, frontElem.level + 1));
+            if (rightChild != null)
+                q.add(new pair(rightChild, frontElem.level + 1));
         }
         ans.add(new ArrayList<>(l)); // this will add the last level element
         return ans;
     }
 
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<>();
-        List<Integer> l = new ArrayList<>();
 
-        if (root == null)
-            return ans;
-        return helper(root, ans, l);
+        return helper(root);
     }
 }
