@@ -1,49 +1,34 @@
-class pair {
-    TreeNode root;
-    int level;
 
-    pair() {
-    } // default constructor
-
-    pair(TreeNode root, int level) { // parameterized Constructor
-        this.root = root;
-        this.level = level;
-    }
-}
+//-------------- Method Second -----------
 
 class Solution {
+    public int levelOfTree(TreeNode root) {
+        if (root == null)
+            return 0;
+        return 1 + Math.max(levelOfTree(root.left), levelOfTree(root.right));
+    }
 
-    static List<Integer> ans;
+    public void preOrderTraversal(TreeNode root, int[] arr, int level) {
+        if (root == null)
+            return;
+
+        arr[level] = root.val;
+        preOrderTraversal(root.left, arr, level + 1);
+        preOrderTraversal(root.right, arr, level + 1);
+    }
 
     public List<Integer> rightSideView(TreeNode root) {
 
-        ans = new ArrayList<>();
+        int height = levelOfTree(root);
+        int[] arr = new int[height];
 
-        if (root == null)
-            return ans;
+        preOrderTraversal(root, arr, 0);
 
-        Queue<pair> q = new LinkedList<>();
+        ArrayList<Integer> ans = new ArrayList<>();
 
-        q.add(new pair(root, 0));
-
-        pair frontElem = new pair();
-
-        while (q.size() > 0) {
-            frontElem = q.remove();
-
-            if (frontElem.root.left != null)
-                q.add(new pair(frontElem.root.left, frontElem.level + 1));
-            if (frontElem.root.right != null)
-                q.add(new pair(frontElem.root.right, frontElem.level + 1));
-
-            if (q.size() != 0) {
-                if (q.peek().level != frontElem.level) {
-                    ans.add(frontElem.root.val);
-                }
-            }
+        for (int i = 0; i < height; i++) {
+            ans.add(arr[i]);
         }
-        ans.add(frontElem.root.val);
-
         return ans;
 
     }
