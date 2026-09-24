@@ -1,35 +1,30 @@
 class Solution {
-    public void TreeConstructor(TreeNode root, int[] preorder, int[] inorder) {
-
-    }
+    // --------------Method second ---------------
+    // IMPORTANT
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-
         int n = preorder.length;
-        if (preorder == null || preorder.length == 0 || inorder == null || inorder.length == 0) {
-            return null;
-        }
+        return build(0, n - 1, 0, n - 1, preorder, inorder);
+    }
 
-        TreeNode root = new TreeNode(preorder[0]);
+    public TreeNode build(int inlo, int inhi, int prelo, int prehi, int[] preorder, int[] inorder) {
+        if (inlo > inhi || prelo > prehi)
+            return null;
+        TreeNode root = new TreeNode(preorder[prelo]);
         int idx = -1;
-        for (int i = 0; i < n; i++) {
-            if (preorder[0] == inorder[i]) {
+        for (int i = inlo; i <= inhi; i++) {
+            if (inorder[i] == preorder[prelo]) {
                 idx = i;
                 break;
             }
         }
-        int[] lefthalfPreorder = Arrays.copyOfRange(preorder, 1, idx + 1);
-        int[] righthalfPreorder = Arrays.copyOfRange(preorder, idx + 1, n);
-        int[] lefthalfInorder = Arrays.copyOfRange(inorder, 0, idx);
-        int[] righthalfInorder = Arrays.copyOfRange(inorder, idx + 1, n);
+        int leftSize = idx - inlo;
 
-        TreeNode left = buildTree(lefthalfPreorder, lefthalfInorder);
-        TreeNode right = buildTree(righthalfPreorder, righthalfInorder);
+        TreeNode left = build(inlo, idx - 1, prelo + 1, prelo + leftSize, preorder, inorder);
+        TreeNode right = build(idx + 1, inhi, prelo + leftSize + 1, prehi, preorder, inorder);
 
         root.left = left;
         root.right = right;
-
         return root;
-
     }
 }
