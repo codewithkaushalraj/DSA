@@ -3,16 +3,6 @@ class Solution {
         if (root == null)
             return;
 
-        if (root.left == null && root.right == null) {
-            TreeNode t = new TreeNode(val);
-
-            if (root.val < val)
-                root.right = t;
-            else
-                root.left = t;
-            return;
-        }
-
         if (root.val < val) {
             if (root.right != null)
                 helper(root.right, val);
