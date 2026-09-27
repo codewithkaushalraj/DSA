@@ -1,17 +1,26 @@
+
 class Solution {
-    public void inorder(TreeNode root, List<Integer> l) {
+
+    public int leftSubTreeCount(TreeNode root) {
         if (root == null)
-            return;
-        inorder(root.left, l);
-        l.add(root.val);
-        inorder(root.right, l);
+            return 0;
+        return 1 + leftSubTreeCount(root.left) + leftSubTreeCount(root.right);
     }
 
     public int kthSmallest(TreeNode root, int k) {
-        List<Integer> l = new ArrayList<>();
 
-        inorder(root, l);
+        int leftElem = 0;
+        if (root.left != null)
+            leftElem = leftSubTreeCount(root.left);
 
-        return l.get(k - 1);
+        if (leftElem >= k)
+            return kthSmallest(root.left, k);
+
+        else if (leftElem + 1 == k)
+            return root.val;
+
+        else
+            return kthSmallest(root.right, k - leftElem - 1);
+
     }
 }
