@@ -1,47 +1,37 @@
-// ------------Method second (IMPORTANT)---------------
-class pair {
+
+// -------------------Method 3rd------------------
+class Triplet {
     long max;
     long min;
+    boolean isBST;
 
-    pair(long max, long min) {
+    Triplet(long max, long min, boolean isBST) {
         this.max = max;
         this.min = min;
+        this.isBST = isBST;
     }
-
 }
 
 class Solution {
-    boolean flag; // true means give tree is a bst
-
-    public pair minMax(TreeNode root) {
+    Triplet minMax(TreeNode root) {
         if (root == null)
-            return new pair(Long.MIN_VALUE, Long.MAX_VALUE);
-
-        if (root.left == null && root.right == null)
-            return new pair(root.val, root.val);
-
-        pair lst = minMax(root.left);
-        pair rst = minMax(root.right);
-
-        if (lst.max >= root.val)
-            flag = false;
-
-        if (rst.min <= root.val)
-            flag = false;
+            return new Triplet(Long.MIN_VALUE, Long.MAX_VALUE, true);
+        Triplet lst = minMax(root.left);
+        Triplet rst = minMax(root.right);
 
         long max = Math.max(root.val, Math.max(lst.max, rst.max));
         long min = Math.min(root.val, Math.min(lst.min, rst.min));
 
-        return new pair(max, min);
+        // for check bst its left,right subtree must be valid bst and leftsubtree ki max val should be less that root.val and right subtree maximum value should be greater than root.val
+
+        boolean isBST = lst.isBST && rst.isBST && lst.max < root.val && rst.min > root.val;
+
+        return new Triplet(max, min, isBST);
 
     }
 
     public boolean isValidBST(TreeNode root) {
 
-        flag = true;
-        minMax(root);
-
-        return flag;
-
+        return minMax(root).isBST;
     }
 }
