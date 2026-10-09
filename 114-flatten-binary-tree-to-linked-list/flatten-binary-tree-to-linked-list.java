@@ -1,26 +1,21 @@
 class Solution {
+    // -----------------------(Method - 3- Solved by morries traversal with o(1) extra space )-------------------------------
     public void flatten(TreeNode root) {
 
-        // Method 2nd
+        TreeNode curr = root;
 
-        if (root == null)
-            return;
-
-        TreeNode lst = root.left;
-        TreeNode rst = root.right;
-
-        root.left = null;
-        root.right = null;
-
-        flatten(lst);
-        flatten(rst);
-
-        root.right = lst;
-        TreeNode temp = root;
-        while (temp.right != null)
-            temp = temp.right;
-
-        temp.right = rst;
+        while (curr != null) {
+            if (curr.left != null) {
+                // find predeicassor
+                TreeNode pred = curr.left;
+                while (pred.right != null)
+                    pred = pred.right;
+                pred.right = curr.right;
+                curr.right = curr.left;
+                curr.left = null;
+            }
+            curr = curr.right;
+        }
 
     }
 }
